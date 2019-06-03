@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orilore.mapper.GoodMapper">
+	<resultMap type="Good" id="goodResultMap">
+		<id column="id" property="id"/>
+		<result column="gname" property="gname"/>
+		<result column="price" property="price"/>
+		<result column="size" property="size"/>
+		<result column="facotry" property="facotry"/>
+		<result column="photo" property="photo"/>
+		<association property="kind" javaType="Kind">
+			<id column="kid" property="id"/>
+			<id column="kname" property="kname"/>
+		</association>
+	</resultMap>
+	<select id="selectOne" parameterType="int" resultMap="goodResultMap">
+		select a.*,b.id kid,b.kname from good a left join kind b on a.kid=b.id where a.id=#{id}
+	</select>
+	<select id="select" resultMap="goodResultMap">
+		select a.*,b.id kid,b.kname from good a left join kind b on a.kid=b.id
+	</select>
+	<insert id="insert" parameterType="Good">
+		insert into good(gname,price,size,facotry,photo,kid) values(#{gname},#{price},#{size},#{facotry},#{photo},#{kind.id})
+	</insert>
+	<delete id="delete" parameterType="int">
+		delete from good where id=#{id}
+	</delete>
+	<update id="upload" parameterType="Good">
+		update good set photo=#{photo} where id=#{id}
+	</update>
+	<update id="update" parameterType="Good">
+		update good set gname=#{gname},price=#{price},size=#{size},facotry=#{facotry},photo=#{photo},kid=#{kind.id} where id=#{id}
+	</update>
+</mapper>
