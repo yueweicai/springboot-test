@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.orilore.model.Kind;
 import com.orilore.service.IKindBiz;
-
+/**
+ * 商品类别控制器
+ * @author Administrator
+ */
 @RestController
 @RequestMapping("/kind")
 public class KindCtrl {
